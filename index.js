@@ -58,7 +58,7 @@ async function fetchUserWeatherInfo(coordinates){
 
     try{
         const res=await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
 
         );
         const data=await res.json();
@@ -73,6 +73,7 @@ async function fetchUserWeatherInfo(coordinates){
 
 
 function renderWeatherInfo(weatherInfo){
+    console.log(weatherInfo)
     const cityName=document.querySelector("[data-cityName]");
     const countryIcon=document.querySelector("[data-countryFlg]");
     const description=document.querySelector("[data-weatherDescription]");
@@ -81,7 +82,7 @@ function renderWeatherInfo(weatherInfo){
     const humidity=document.querySelector("[data-humidity]");
     const windSpeed=document.querySelector("[data-windSpeed]");
     const cloud=document.querySelector("[data-cloud]");
-
+     console.log(cloud)
     cityName.innerText=weatherInfo?.name;
     countryIcon.src=`https://flagcdn.com/144x108/${weatherInfo?.sys?.country.toLowerCase()}.png`;
     description.innerText=weatherInfo?.weather?.[0]?.description;
@@ -89,7 +90,10 @@ function renderWeatherInfo(weatherInfo){
     temperature.innerText=`${weatherInfo?.main?.temp} °C`;
     humidity.innerText=`${weatherInfo?.main?.humidity} %`;
     windSpeed.innerText=`${weatherInfo?.wind?.speed} m/s`;
-    cloud.innertText=`${weatherInfo?.clouds?.all} %`;
+    console.log(weatherInfo?.clouds?.all)
+    console.log(cloud.innerText)
+    cloud.innerText=`${weatherInfo?.clouds?.all}%`;
+    console.log(cloud.innerText)
 
 
 
@@ -130,7 +134,7 @@ async function fetchSearchWeatherInfo(city){
     grantAccessButton.classList.remove("active");
     try{
         const response= await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
         );
         const data =await response.json();
         loadingScreen.classList.remove("active");
